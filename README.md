@@ -7,6 +7,11 @@ Stockwaage für Bienenbeuten
 * 24Bit ADC [HX711](https://github.com/sparkfun/HX711-Load-Cell-Amplifier)
 * Arduino [Yun](https://www.arduino.cc/en/Main/ArduinoBoardYun?from=Products.ArduinoYUN)
 
+### Software
+#### Nützliche Bibliotheken
+* [HX711 C-lib](https://github.com/bogde/HX711)
+* [JSon C-lib](https://github.com/bblanchon/ArduinoJson/wiki)
+
 ## Aufbereitung der Daten
 * Java Service als Single-Jar mittels [Dropwizard](http://www.dropwizard.io/getting-started.html)
 * RaspberryPi (2)
