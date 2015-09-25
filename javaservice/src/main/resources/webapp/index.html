@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Stockwaage</title>
+  <meta charset="UTF-8">
+  <title>Stockwaage</title>
+
+  <script src="./libs/jquery.js"></script>
+  <script src="./libs/highcharts.js"></script>
+  <script src="./app.js"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
-  <body>
-      <h1>Hello World</h1>
-  </body>
+<body>
+  <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+  <input type="text" value="5">
+  <div>Current number of bees: <span id="result"></span></div>
+</body>
 </html>
