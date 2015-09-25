@@ -17,8 +17,8 @@ public class RestHelper {
 
     public static RestAdapter createOnCallRestAdapter() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-            .setEndpoint("https://oncall.car2go.com")
-            .setClient(new OkClient(MySslTrust.trustcert(null)))
+            .setEndpoint("http://rpi207:9000/api/rest/")
+//            .setClient(new OkClient(MySslTrust.trustcert(null)))
             .setRequestInterceptor(requestInterceptor)
             .build();
 
