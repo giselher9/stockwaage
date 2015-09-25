@@ -2,16 +2,17 @@ var chart;
 
 function requestData() {
   $.ajax({
-    url: 'http://localhost:9000/api/helloworld/test',
-    success: function (point) {
+    url: 'http://rpi207:9000/api/rest/currentweights',
+    success: function (data) {
       var series = chart.series[0],
         shift = series.data.length > 20; // shift if the series is
                                          // longer than 20
       // add the point
-      chart.series[0].addPoint(point.number, true, shift);
+      var point = data[0].value;
+      chart.series[0].addPoint(point, true, shift);
 
       var unit = $('input').val();
-      $('#result').html(point.number/unit);
+      $('#result').html(point/unit);
 
       // call it again
       setTimeout(requestData, 500);
