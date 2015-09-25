@@ -1,6 +1,8 @@
 # stockwaage
 Stockwaage für Bienenbeuten
 
+![Basisaufbau](https://github.com/giselher9/stockwaage/basic_buildup_Steckplatine.png)
+
 ## Messwerte erstellen
 ### Hardware
 * Wägezelle [Bosche H30A](http://www.bosche.eu/sites/default/files/prospekte/H30A.pdf), Nennlast 200kg
