@@ -1,6 +1,7 @@
 package com.stockwaage.service.application;
 
 import com.stockwaage.service.config.StockwaageServiceConfiguration;
+import com.stockwaage.service.resources.HelloWorldResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -20,6 +21,7 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
 
     @Override
     public void run(StockwaageServiceConfiguration configuration, Environment environment) {
-
+		final HelloWorldResource resource = new HelloWorldResource();
+		environment.jersey().register(resource);
     }
 }
