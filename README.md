@@ -1,7 +1,7 @@
 # stockwaage
 Stockwaage für Bienenbeuten
 
-![Basisaufbau](https://github.com/giselher9/stockwaage/basic_buildup_Steckplatine.png)
+![Basisaufbau](https://github.com/giselher9/stockwaage/blob/master/basic_buildup_Steckplatine.png)
 
 ## Messwerte erstellen
 ### Hardware
