@@ -17,7 +17,7 @@ function requestLiveData() {
       $('#result').html(value/unit);
 
       // call it again
-      setTimeout(requestLiveData, 1000);
+      setTimeout(requestLiveData, 500);
     },
     cache: false
   });
@@ -71,7 +71,7 @@ $(document).ready(function () {
       enabled: false
     },
     series: [{
-      name: 'Random data',
+      name: 'Weight',
       data: []
     }]
   });
