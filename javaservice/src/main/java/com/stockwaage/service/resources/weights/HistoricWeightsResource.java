@@ -18,7 +18,7 @@ public class HistoricWeightsResource {
   private WeightAssembler weightAssembler;
   private WeightDao weightDao;
 
-  public HistoricWeightsResource(WeightDao weightDao, WeightAssembler weightAssembler){
+  public HistoricWeightsResource(WeightDao weightDao, WeightAssembler weightAssembler) {
     this.weightAssembler = weightAssembler;
     this.weightDao = weightDao;
   }
@@ -26,12 +26,12 @@ public class HistoricWeightsResource {
   @GET
   @Path("/historicweights")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<WeightRepresentation> historicWeights( @QueryParam("loadCell")
-                                                       String loadCell) {
-    if(!Strings.isNullOrEmpty(loadCell)) {
-      return weightAssembler.assemble(weightDao.historicWeightsBy(loadCell));
+  public List<WeightRepresentation> historicWeights(@QueryParam("loadCell")
+                                                    String loadCell) {
+    if (!Strings.isNullOrEmpty(loadCell)) {
+      return weightAssembler.assemble(weightDao.allHistoricWeights());
     }
-    return weightAssembler.assemble(weightDao.allHistoricWeights());
+    return weightAssembler.assemble(weightDao.historicWeightsBy(loadCell));
   }
 
 }
