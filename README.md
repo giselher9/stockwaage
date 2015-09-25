@@ -19,5 +19,6 @@ Grundsätzliche Idee ist die Messung des Bienenbeutengewichts mittels einer Plat
 * [JSon C-lib](https://github.com/bblanchon/ArduinoJson/wiki)
 
 ## Aufbereitung der Daten
-* Java Service als Single-Jar mittels [Dropwizard](http://www.dropwizard.io/getting-started.html)
-* RaspberryPi (2)
+* Java Service als Single-Jar mittels [Dropwizard](http://www.dropwizard.io/getting-started.html) auf RaspberryPi (2)
+* Web Frontend
+* Smartphone App
