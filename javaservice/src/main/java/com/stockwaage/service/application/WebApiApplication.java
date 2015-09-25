@@ -6,6 +6,13 @@ import com.stockwaage.service.resources.weights.HistoricWeightsResource;
 import com.stockwaage.service.resources.weights.WeightAssembler;
 import com.stockwaage.service.weights.WeightDao;
 
+import org.eclipse.jetty.servlets.CrossOriginFilter;
+
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -24,6 +31,12 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
 
   @Override
   public void run(StockwaageServiceConfiguration configuration, Environment environment) {
+    addCorsServletFilter(environment);
+
+    registerResources(environment);
+  }
+
+  private void registerResources(Environment environment) {
     final WeightDao weightDao = new WeightDao();
     final WeightAssembler weightAssembler = new WeightAssembler();
     final CurrentWeightsResource currentWeightsResource = new CurrentWeightsResource(weightDao,
@@ -32,5 +45,13 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
         (weightDao, weightAssembler);
     environment.jersey().register(currentWeightsResource);
     environment.jersey().register(historicWeightsResource);
+  }
+
+  private void addCorsServletFilter(Environment environment) {
+    final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+    cors.setInitParameter("allowedOrigins", "*");
+    cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+    cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+    cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
   }
 }
