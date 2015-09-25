@@ -8,14 +8,16 @@ function requestData() {
         shift = series.data.length > 20; // shift if the series is
                                          // longer than 20
       // add the point
-      var point = data[0].value;
-      chart.series[0].addPoint(point, true, shift);
+      var timestamp = Date.parse(data[0].timestamp);
+      var value =  data[0].value;
+      var coord = [timestamp,value];
+      chart.series[0].addPoint(coord, true, shift);
 
       var unit = $('input').val();
-      $('#result').html(point/unit);
+      $('#result').html(value/unit);
 
       // call it again
-      setTimeout(requestData, 500);
+      setTimeout(requestData, 1000);
     },
     cache: false
   });

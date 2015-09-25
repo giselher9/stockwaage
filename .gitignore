@@ -1,1 +1,3 @@
 /javaservice/target
+/javaservice/.idea
+javaservice/src/main/resources/webapp/.idea
