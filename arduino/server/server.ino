@@ -6,7 +6,7 @@
 #include <YunClient.h>
 
 YunServer server;
-StaticJsonBuffer<200> jsonBuffer;
+
 
 HX711 scale(A0, A1);		// parameter "gain" is ommited; the default value 128 is used by the library
 float calibration_factor = -23100;
@@ -67,7 +67,9 @@ void apiCommand(YunClient client) {
 }
 
 void weightCommand(YunClient client) {
+  Serial.println("weightCommand received");
   
+  StaticJsonBuffer<200> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   root["sensor"] = "loadcell01";
   root["type"] = "weight";
@@ -75,6 +77,7 @@ void weightCommand(YunClient client) {
   root["unit"] = "kg";
   root["value"] = readLoadCell();
   
+  root.prettyPrintTo(Serial);
   root.prettyPrintTo(client);
 }
 
