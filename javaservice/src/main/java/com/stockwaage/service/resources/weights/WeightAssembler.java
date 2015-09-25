@@ -11,7 +11,7 @@ public class WeightAssembler {
     return weights.stream().map(weight -> assemble(weight)).collect(Collectors.toList());
   }
 
-  private WeightRepresentation assemble(Weight weight) {
+  WeightRepresentation assemble(Weight weight) {
     return new WeightRepresentation(weight.loadCellId(), weight.weightUnit(), weight
         .value(), weight.timestamp());
   }

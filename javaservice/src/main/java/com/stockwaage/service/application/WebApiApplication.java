@@ -1,6 +1,7 @@
 package com.stockwaage.service.application;
 
 import com.stockwaage.service.config.StockwaageServiceConfiguration;
+import com.stockwaage.service.loadcell.HttpLoadCellConnector;
 import com.stockwaage.service.resources.weights.CurrentWeightsResource;
 import com.stockwaage.service.resources.weights.HistoricWeightsResource;
 import com.stockwaage.service.resources.weights.WeightAssembler;
@@ -39,8 +40,9 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
   private void registerResources(Environment environment) {
     final WeightDao weightDao = new WeightDao();
     final WeightAssembler weightAssembler = new WeightAssembler();
-    final CurrentWeightsResource currentWeightsResource = new CurrentWeightsResource(weightDao,
-        weightAssembler);
+    final HttpLoadCellConnector loadCellConnector = new HttpLoadCellConnector();
+    final CurrentWeightsResource currentWeightsResource = new CurrentWeightsResource(
+        weightAssembler, loadCellConnector);
     final HistoricWeightsResource historicWeightsResource = new HistoricWeightsResource
         (weightDao, weightAssembler);
     environment.jersey().register(currentWeightsResource);
