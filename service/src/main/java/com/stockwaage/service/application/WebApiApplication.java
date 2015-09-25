@@ -16,7 +16,7 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
 
     @Override
     public void initialize(Bootstrap<StockwaageServiceConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/webapp/", "/x"));
+        bootstrap.addBundle(new AssetsBundle("/webapp/", "/frontend"));
     }
 
     @Override
