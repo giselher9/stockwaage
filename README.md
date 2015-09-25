@@ -1,7 +1,9 @@
-# stockwaage
-Stockwaage für Bienenbeuten
+# Stockwaage
+Stockwaage für Bienenbeuten zur Erfassung von Honigertrag, Schwarmabgang...
 
 ![Basisaufbau](https://github.com/giselher9/stockwaage/blob/master/basic_buildup_Steckplatine.png)
+
+Grundsätzliche Idee ist die Messung des Bienenbeutengewichts mittels einer Plattformwägezelle über die Arduino Plattform. Ein separater Service greift die Daten (von potentiell mehreren Waagen) ab und stellt sie über eine REST Schnittstelle bereit.
 
 ## Messwerte erstellen
 ### Hardware
