@@ -1,8 +1,10 @@
 package com.stockwaage.service.resources.weights;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
-import com.stockwaage.service.weights.WeightDao;
+import com.stockwaage.service.loadcell.HttpLoadCellConnector;
+import com.stockwaage.service.weights.Weight;
 
 import java.util.List;
 
@@ -16,22 +18,25 @@ import javax.ws.rs.core.MediaType;
 public class CurrentWeightsResource {
 
   private WeightAssembler weightAssembler;
-  private WeightDao weightDao;
+  private HttpLoadCellConnector loadCellConnector;
 
-  public CurrentWeightsResource(WeightDao weightDao, WeightAssembler weightAssembler){
+  public CurrentWeightsResource(WeightAssembler weightAssembler,
+                                HttpLoadCellConnector loadCellConnector) {
     this.weightAssembler = weightAssembler;
-    this.weightDao = weightDao;
+    this.loadCellConnector = loadCellConnector;
   }
 
   @GET
   @Path("/currentweights")
   @Produces(MediaType.APPLICATION_JSON)
   public List<WeightRepresentation> currentWeights(@QueryParam("loadCell")
-                                                     String loadCell) {
-    if(Strings.isNullOrEmpty(loadCell)) {
-      return weightAssembler.assemble(weightDao.allCurrentWeights());
-    };
-    return weightAssembler.assemble(weightDao.currentWeightsBy(loadCell));
+                                                   String loadCell) {
+    Weight weight = loadCellConnector.currentWeight();
+
+    if (!Strings.isNullOrEmpty(loadCell) && !loadCell.equals(weight.loadCellId())) {
+      return Lists.newArrayList();
+    }
+    return Lists.newArrayList(weightAssembler.assemble(weight));
   }
 
 }

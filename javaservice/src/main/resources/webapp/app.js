@@ -17,7 +17,7 @@ function requestLiveData() {
       $('#result').html(value/unit);
 
       // call it again
-      setTimeout(requestLiveData, 500);
+      setTimeout(requestLiveData, 1000);
     },
     cache: false
   });
