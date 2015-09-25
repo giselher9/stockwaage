@@ -1,4 +1,4 @@
-cd to /service
+cd to javaservice
 
 build jar:
 mvn clean package
