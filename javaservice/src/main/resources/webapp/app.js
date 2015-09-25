@@ -1,6 +1,6 @@
 var chart;
 
-function requestData() {
+function requestLiveData() {
   $.ajax({
     url: 'http://rpi207:9000/api/rest/currentweights',
     success: function (data) {
@@ -17,7 +17,7 @@ function requestData() {
       $('#result').html(value/unit);
 
       // call it again
-      setTimeout(requestData, 1000);
+      setTimeout(requestLiveData, 1000);
     },
     cache: false
   });
@@ -34,7 +34,7 @@ $(document).ready(function () {
       animation: Highcharts.svg,
       marginRight: 10,
       events: {
-        load: requestData
+        load: requestLiveData
       }
     },
     credits: {
