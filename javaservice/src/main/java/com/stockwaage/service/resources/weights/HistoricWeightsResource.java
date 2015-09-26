@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 
 import com.stockwaage.service.weights.WeightDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -27,11 +28,11 @@ public class HistoricWeightsResource {
   @Path("/historicweights")
   @Produces(MediaType.APPLICATION_JSON)
   public List<WeightRepresentation> historicWeights(@QueryParam("loadCell")
-                                                    String loadCell) {
+                                                    String loadCell) throws SQLException, ClassNotFoundException {
     if (!Strings.isNullOrEmpty(loadCell)) {
       return weightAssembler.assemble(weightDao.allHistoricWeights());
     }
-    return weightAssembler.assemble(weightDao.historicWeightsBy(loadCell));
+    return weightAssembler.assemble(weightDao.allHistoricWeights());
   }
 
 }

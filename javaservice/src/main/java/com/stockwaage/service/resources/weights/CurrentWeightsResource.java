@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.stockwaage.service.loadcell.HttpLoadCellConnector;
-import com.stockwaage.service.db.MongoJdbcClient;
 import com.stockwaage.service.weights.Weight;
 
 import java.io.IOException;
@@ -23,13 +22,11 @@ public class CurrentWeightsResource {
 
   private WeightAssembler weightAssembler;
   private HttpLoadCellConnector loadCellConnector;
-  private MongoJdbcClient jdbcClient;
 
   public CurrentWeightsResource(WeightAssembler weightAssembler,
-                                HttpLoadCellConnector loadCellConnector, MongoJdbcClient jdbcClient) {
+                                HttpLoadCellConnector loadCellConnector) {
     this.weightAssembler = weightAssembler;
     this.loadCellConnector = loadCellConnector;
-    this.jdbcClient = jdbcClient;
   }
 
   @GET
@@ -38,9 +35,6 @@ public class CurrentWeightsResource {
   public List<WeightRepresentation> currentWeights(@QueryParam("loadCell")
                                                    String loadCell) throws JsonMappingException, JsonParseException, IOException {
     Weight weight = loadCellConnector.currentWeight();
-
-    jdbcClient.insert(weight);
-    List<Weight> savedWeights = jdbcClient.findWeights();
 
     if (!Strings.isNullOrEmpty(loadCell) && !loadCell.equals(weight.loadCellId())) {
       return Lists.newArrayList();

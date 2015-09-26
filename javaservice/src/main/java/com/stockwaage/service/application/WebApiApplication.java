@@ -1,8 +1,9 @@
 package com.stockwaage.service.application;
 
 import com.stockwaage.service.config.StockwaageServiceConfiguration;
+import com.stockwaage.service.db.SqliteJdbcClient;
 import com.stockwaage.service.loadcell.HttpLoadCellConnector;
-import com.stockwaage.service.db.MongoJdbcClient;
+import com.stockwaage.service.loadcell.LoadCellSyncer;
 import com.stockwaage.service.resources.weights.CurrentWeightsResource;
 import com.stockwaage.service.resources.weights.HistoricWeightsResource;
 import com.stockwaage.service.resources.weights.WeightAssembler;
@@ -33,18 +34,24 @@ public class WebApiApplication extends Application<StockwaageServiceConfiguratio
 
   @Override
   public void run(StockwaageServiceConfiguration configuration, Environment environment) {
+    final SqliteJdbcClient jdbcClient = new SqliteJdbcClient();
+    final HttpLoadCellConnector loadCellConnector = new HttpLoadCellConnector();
     addCorsServletFilter(environment);
-
-    registerResources(environment);
+    startLoadCellSyncer(jdbcClient, loadCellConnector);
+    registerResources(environment, jdbcClient, loadCellConnector);
   }
 
-  private void registerResources(Environment environment) {
-    final WeightDao weightDao = new WeightDao();
+  private void startLoadCellSyncer(SqliteJdbcClient jdbcClient, HttpLoadCellConnector loadCellConnector) {
+    final LoadCellSyncer loadCellSyncer = new LoadCellSyncer(loadCellConnector, jdbcClient);
+    loadCellSyncer.start();
+  }
+
+  private void registerResources(Environment environment, SqliteJdbcClient jdbcClient, HttpLoadCellConnector loadCellConnector) {
+    final WeightDao weightDao = new WeightDao(jdbcClient);
     final WeightAssembler weightAssembler = new WeightAssembler();
-    final HttpLoadCellConnector loadCellConnector = new HttpLoadCellConnector();
-    final MongoJdbcClient jdbcClient = new MongoJdbcClient();
+
     final CurrentWeightsResource currentWeightsResource = new CurrentWeightsResource(
-        weightAssembler, loadCellConnector, jdbcClient);
+        weightAssembler, loadCellConnector);
     final HistoricWeightsResource historicWeightsResource = new HistoricWeightsResource
         (weightDao, weightAssembler);
     environment.jersey().register(currentWeightsResource);
