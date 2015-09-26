@@ -13,7 +13,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.soap.AddressingFeature;
 
 public class HttpLoadCellConnector {
 
@@ -28,26 +27,16 @@ public class HttpLoadCellConnector {
   }
 
 
-  public Weight currentWeight(){
+  public Weight currentWeight() throws JsonMappingException, JsonParseException, IOException {
     Response response = loadCell
         .request(MediaType.APPLICATION_JSON)
         .get();
 
     String json = response.readEntity(String.class);
     ObjectMapper mapper = new ObjectMapper();
-    try {
-      LoadCellWeight weight = mapper.readValue(json, LoadCellWeight.class);
-      return new Weight(weight.sensor(), WeightUnit.fromString(weight.unit()), weight.value(),
-          LocalDateTime
-          .now());
-    }catch(JsonMappingException e){
-      //todo
-    } catch(JsonParseException e){
-      //todo
-    } catch (IOException e){
-      //todo
-    }
-    return null;
+    LoadCellWeight weight = mapper.readValue(json, LoadCellWeight.class);
+    return new Weight(weight.sensor(), WeightUnit.fromString(weight.unit()), weight.value(),
+        LocalDateTime.now());
   }
 
 }
