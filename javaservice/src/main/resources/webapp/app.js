@@ -71,7 +71,7 @@ $(document).ready(function () {
       enabled: false
     },
     series: [{
-      name: 'Random data',
+      name: 'Weight',
       data: []
     }]
   });
